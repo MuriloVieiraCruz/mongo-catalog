@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collation = "products")
+@Document(collection = "products")
 public class Product {
 
     // Aqui poderia ser utilizado a variável ObjectId, mas o mongo
