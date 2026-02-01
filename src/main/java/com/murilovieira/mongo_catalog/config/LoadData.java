@@ -54,7 +54,7 @@ public class LoadData implements CommandLineRunner {
                 null,
                 "Dell XPS 13",
                 "Ultrabook potente e leve",
-                new BigDecimal("12500.00"),
+                new BigDecimal("1.00"),
                 5,
                 true,
                 notebookCard
@@ -80,6 +80,16 @@ public class LoadData implements CommandLineRunner {
                 monitorCard
         );
 
+        Product p4 = new Product(
+                null,
+                "Dell Inspiron 6",
+                "Potente e leve",
+                new BigDecimal("3.00"),
+                5,
+                true,
+                notebookCard
+        );
+
         Store lojaPaulista = new Store(
                 "Tech Store Paulista",
                 "Av. Paulista, 1000",
@@ -100,7 +110,7 @@ public class LoadData implements CommandLineRunner {
 
         storeRepository.saveAll(Arrays.asList(lojaPaulista, lojaIbirapuera, lojaGuarulhos));
 
-        repository.saveAll(Arrays.asList(p1, p2, p3));
+        repository.saveAll(Arrays.asList(p1, p2, p3, p4));
 
         System.out.println("--- Carga de Dados Concluída! ---");
         System.out.println("Produtos salvos: " + repository.count());

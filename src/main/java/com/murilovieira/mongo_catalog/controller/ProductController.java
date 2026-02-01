@@ -1,5 +1,6 @@
 package com.murilovieira.mongo_catalog.controller;
 
+import com.murilovieira.mongo_catalog.dto.ReportBrand;
 import com.murilovieira.mongo_catalog.entity.Product;
 import com.murilovieira.mongo_catalog.service.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +46,10 @@ public class ProductController {
     @GetMapping("/baratos")
     public List<Product> findCheap(@RequestParam("max") double max) {
         return service.findForMaxPrice(max);
+    }
+
+    @GetMapping("/relatorio-marcas")
+    public List<ReportBrand> getMarkReport() {
+        return service.generateReportByBrand();
     }
 }
