@@ -1,9 +1,12 @@
 package com.murilovieira.mongo_catalog.config;
 
 import com.murilovieira.mongo_catalog.entity.Product;
+import com.murilovieira.mongo_catalog.entity.Store;
 import com.murilovieira.mongo_catalog.entity.TechnicalSheet;
 import com.murilovieira.mongo_catalog.repository.ProductRepository;
+import com.murilovieira.mongo_catalog.repository.StoreRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -13,15 +16,18 @@ import java.util.Arrays;
 public class LoadData implements CommandLineRunner {
 
     private final ProductRepository repository;
+    private final StoreRepository storeRepository;
 
-    public LoadData(ProductRepository repository) {
+    public LoadData(ProductRepository repository, StoreRepository storeRepository) {
         this.repository = repository;
+        this.storeRepository = storeRepository;
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         repository.deleteAll();
+        storeRepository.deleteAll();
 
         TechnicalSheet notebookCard = new TechnicalSheet(
                 "Dell",
@@ -74,9 +80,30 @@ public class LoadData implements CommandLineRunner {
                 monitorCard
         );
 
+        Store lojaPaulista = new Store(
+                "Tech Store Paulista",
+                "Av. Paulista, 1000",
+                new GeoJsonPoint(-46.6524, -23.5655)
+        );
+
+        Store lojaIbirapuera = new Store(
+                "Tech Store Ibirapuera",
+                "Av. Ibirapuera, 3103",
+                new GeoJsonPoint(-46.6658, -23.6000)
+        );
+
+        Store lojaGuarulhos = new Store(
+                "Tech Store GRU",
+                "Aeroporto de Guarulhos",
+                new GeoJsonPoint(-46.4730, -23.4261)
+        );
+
+        storeRepository.saveAll(Arrays.asList(lojaPaulista, lojaIbirapuera, lojaGuarulhos));
+
         repository.saveAll(Arrays.asList(p1, p2, p3));
 
         System.out.println("--- Carga de Dados Concluída! ---");
         System.out.println("Produtos salvos: " + repository.count());
+        System.out.println("Lojas salvas: " + storeRepository.count());
     }
 }
